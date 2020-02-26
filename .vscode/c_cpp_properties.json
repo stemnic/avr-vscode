@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "AVRGCC_Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avr8-gnu-toolchain/**"
+            ],
+            "defines": [
+                "__GNUC__=5",
+                "__GNUC_MINOR__=4",
+                "__ATtiny817__",
+                "__AVR_ATtiny817__",
+                "__AVR_DEV_LIB_NAME__=tn817"
+            ],
+            "cStandard": "c99",
+            "cppStandard": "c++03",
+            "intelliSenseMode": "msvc-x64"
+        },
+        {
+            "name": "ICCAVR_Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files (x86)/IAR Systems/Embedded Workbench 8.0/avr/inc/**"
+            ],
+            "defines": [
+                "__ICCAVR__",
+                "__IAR_SYSTEMS_ICC__",
+                "__ATtiny817__",
+                "__AVR_ATtiny817__"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
