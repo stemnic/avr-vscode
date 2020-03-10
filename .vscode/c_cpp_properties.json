@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "AVRGCC_Win32",
+            "name": "ATtiny817-AVRGCC",
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avr8-gnu-toolchain/**"
@@ -15,10 +15,10 @@
             ],
             "cStandard": "c99",
             "cppStandard": "c++03",
-            "intelliSenseMode": "msvc-x64"
+            "intelliSenseMode": "gcc-x86"
         },
         {
-            "name": "ICCAVR_Win32",
+            "name": "ATtiny817-ICCAVR",
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/Program Files (x86)/IAR Systems/Embedded Workbench 8.0/avr/inc/**"
@@ -31,7 +31,7 @@
             ],
             "cStandard": "c11",
             "cppStandard": "c++14",
-            "intelliSenseMode": "msvc-x64"
+            "intelliSenseMode": "gcc-x86"
         }
     ],
     "version": 4
