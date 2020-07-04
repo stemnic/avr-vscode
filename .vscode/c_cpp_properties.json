@@ -1,36 +1,22 @@
 {
     "configurations": [
         {
-            "name": "ATtiny817-AVRGCC",
+            "name": "ATmega4809-AVRGCC",
             "includePath": [
                 "${workspaceFolder}/**",
+                "C:/Program Files (x86)/Atmel/Studio/7.0/packs/atmel/ATmega_DFP/1.3.300/include/",
                 "C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avr8-gnu-toolchain/**"
+                
             ],
             "defines": [
                 "__GNUC__=5",
                 "__GNUC_MINOR__=4",
-                "__ATtiny817__",
-                "__AVR_ATtiny817__",
-                "__AVR_DEV_LIB_NAME__=tn817"
+                "__ATmega4809__",
+                "__AVR_ATmega4809__",
+                "__AVR_DEV_LIB_NAME__=m4809"
             ],
             "cStandard": "c99",
             "cppStandard": "c++03",
-            "intelliSenseMode": "gcc-x86"
-        },
-        {
-            "name": "ATtiny817-ICCAVR",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "C:/Program Files (x86)/IAR Systems/Embedded Workbench 8.0/avr/inc/**"
-            ],
-            "defines": [
-                "__ICCAVR__",
-                "__IAR_SYSTEMS_ICC__",
-                "__ATtiny817__",
-                "__AVR_ATtiny817__"
-            ],
-            "cStandard": "c11",
-            "cppStandard": "c++14",
             "intelliSenseMode": "gcc-x86"
         }
     ],
