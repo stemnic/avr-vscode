@@ -13,12 +13,73 @@
             "command": "make",
             "args": [
                 "all",
-                "QUIET=0"
             ],
             "group": { // Move this to 'make iar' if you want iar as the default build command
                 "kind": "build",
                 "isDefault": true
             },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "make flash",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/gcc"
+            },
+            "command": "make",
+            "args": [
+                "flash",
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "make install",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/gcc"
+            },
+            "command": "make",
+            "args": [
+                "install",
+            ],
             "presentation": {
                 "echo": true,
                 "reveal": "always",

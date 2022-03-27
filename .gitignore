@@ -1,0 +1,3 @@
+gcc/*.hex
+gcc/*.elf
+gcc/*.out

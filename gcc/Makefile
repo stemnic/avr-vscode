@@ -1,136 +1,68 @@
-
-################################################################################
-# Automatically-generated file. Do not edit!
-################################################################################
-
-ifdef SystemRoot
-	SHELL = cmd.exe
-	MK_DIR = mkdir
-else
-	ifeq ($(shell uname), Linux)
-		MK_DIR = mkdir -p
-	endif
-
-	ifeq ($(shell uname | cut -d _ -f 1), CYGWIN)
-		MK_DIR = mkdir -p
-	endif
-
-	ifeq ($(shell uname | cut -d _ -f 1), MINGW32)
-		MK_DIR = mkdir -p
-	endif
-
-	ifeq ($(shell uname | cut -d _ -f 1), MINGW64)
-		MK_DIR = mkdir -p
-	endif
-endif
-
-# List the subdirectories for creating object files
-SUB_DIRS +=  \
- \
-
-# List the object files
-OBJS +=  \
-main.o \
-
-OBJS_AS_ARGS +=  \
-"main.o" \
+#	This is a Makefile for AVR KURS,
+#	attempting to provide support for compiling and flashing AtMega4809 Curiosity from MacOS (2019-03-01)
+#	Author: ole.sivert@aarhaug.com
+#	Special thanks: magne.hov@gmail.com and richard.bman@gmail.com
+#	
+#	Guide for programming AVR AtMega4809 in MacOS  
+#		To compile for AVR AtMega4809 we need some utilities for AVR, install these:
+#		The ones in your repos may or may not be up to date, let's save ourselves
+#		the trouble and go straight to the source. 
+#		1) Run 'make install', which will execute install_toolchain.sh. It is always wise to 
+#		   read the contents of scripts before running them. 
+#		2) The chip acts as a USB storage device! It should automount the path given below
+#		5) Done! You can now cp the Makefile to wherever the main.c file you're working on is,
+#		   and run 'make'. Note that uploading to the chip requires sudo priviledges, so you
+#		   you will be asked for your password when uploading
 
 
-# List the dependency files
-DEPS := $(OBJS:%.o=%.d)
+# ###
+# Dependency directories and binaries
+CHIP_DIR = /Volumes/CURIOSITY/
 
-DEPS_AS_ARGS +=  \
-"main.d" \
+TOOL_CHAIN_PATH = $(HOME)/Library/avr-toolchain/bin/
 
-MAKEFILE_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-OUTPUT_FILE_NAME :=build
-QUOTE := "
-OUTPUT_FILE_PATH +=$(OUTPUT_FILE_NAME).elf
-OUTPUT_FILE_PATH_AS_ARGS +=$(OUTPUT_FILE_NAME).elf
+DFP_DIR = $(HOME)/Library/avr-atpack/
+AVR-GCC = $(TOOL_CHAIN_PATH)/avr-gcc
+AVR-OBJCOPY = $(TOOL_CHAIN_PATH)/avr-objcopy
 
-vpath %.c ../
-vpath %.s ../
-vpath %.S ../
+# ####
+# Project files and flags
 
-# All Target
-all: $(SUB_DIRS) $(OUTPUT_FILE_PATH)
+#Source files, add more files to SRC if needed: main.c uart.c ...
+SRC = ../main.c
+OBJ = $(SRC:.c=.o)
 
-# Linker target
+#Target name
+TARGET = out
 
+#Compiler and Linker flags
+MCU = atmega4809
+CFLAGS = -B $(DFP_DIR)gcc/dev/atmega4809 -I $(DFP_DIR)include -mmcu=$(MCU) -Os 
+LDFLAGS = -B $(DFP_DIR)gcc/dev/atmega4809 -I $(DFP_DIR)include -mmcu=$(MCU) #-Wl,-Map=$(TARGET).map
 
+# ####
+# Make rules
+all: build flash clean
 
+build: $(TARGET).hex
 
-$(OUTPUT_FILE_PATH): $(OBJS)
-	@echo Building target: $@
-	@echo Invoking: AVR/GNU Linker
-	$(QUOTE)avr-gcc$(QUOTE) -o $(OUTPUT_FILE_NAME).elf $(OBJS_AS_ARGS)  -Wl,--start-group -lm -Wl,--end-group \
--Wl,-Map="$(OUTPUT_FILE_NAME).map" -Wl,--gc-sections \
--mmcu=atmega4809 -B "$(MAKEFILE_DIR)../gcc/dev/atmega4809" \
--L"../gcc/dev/atmega4809/avrxmega3"  \
--l:libatmega4809.a 
-	@echo Finished building target: $@
-
-	"avr-objcopy" -O binary "$(OUTPUT_FILE_NAME).elf" "$(OUTPUT_FILE_NAME).bin"
-	"avr-objcopy" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures \
-        "$(OUTPUT_FILE_NAME).elf" "$(OUTPUT_FILE_NAME).hex"
-	"avr-objcopy" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma \
-        .eeprom=0 --no-change-warnings -O binary "$(OUTPUT_FILE_NAME).elf" \
-        "$(OUTPUT_FILE_NAME).eep" || exit 0
-	"avr-objdump" -h -S "$(OUTPUT_FILE_NAME).elf" > "$(OUTPUT_FILE_NAME).lss"
-	"avr-size" "$(OUTPUT_FILE_NAME).elf"
-
-# Compiler target(s)
-
-
-
-
-%.o: %.c
-	@echo Building file: $<
-	@echo AVR/GNU C Compiler
-	$(QUOTE)avr-gcc$(QUOTE) -x c -DF_CPU=3333333 -DDEBUG -Os -ffunction-sections -g3 -Wall -c -std=gnu99 \
--mmcu=atmega4809 -B "$(MAKEFILE_DIR)../gcc/dev/atmega4809" \
-    -D__mega4809__ \
--I"C:/Program Files (x86)/Atmel/Studio/7.0/packs/atmel/ATmega_DFP/1.3.300/include/" -I"../config" -I"../include" -I"../utils" -I"../utils/assembler" -I"../" -I"../include"  \
--MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -o "$@" "$<"
-
-	@echo Finished building: $<
-
-%.o: %.s
-	@echo Building file: $<
-	@echo AVR/GNU Assembler
-	$(QUOTE)avr-gcc$(QUOTE) -x assembler-with-cpp -DF_CPU=3333333 -DDEBUG -Os -ffunction-sections -g3 -Wall -c -std=gnu99 \
--mmcu=atmega4809 -B "$(MAKEFILE_DIR)../gcc/dev/atmega4809" \
-    -D__mega4809__ \
--I"C:/Program Files (x86)/Atmel/Studio/7.0/packs/atmel/ATmega_DFP/1.3.300/include/" -I"../config" -I"../include" -I"../utils" -I"../utils/assembler" -I"../" -I"../include"  \
--MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -o "$@" "$<"
-
-	@echo Finished building: $<
-
-%.o: %.S
-	@echo Building file: $<
-	@echo AVR/GNU Preprocessing Assembler
-	$(QUOTE)avr-gcc$(QUOTE) -x assembler-with-cpp -DF_CPU=3333333 -DDEBUG -Os -ffunction-sections -g3 -Wall -c -std=gnu99 \
--mmcu=atmega4809 -B "$(MAKEFILE_DIR)../gcc/dev/atmega4809" \
-    -D__mega4809__ \
--I"C:/Program Files (x86)/Atmel/Studio/7.0/packs/atmel/ATmega_DFP/1.3.300/include/" -I"../config" -I"../include" -I"../utils" -I"../utils/assembler" -I"../" -I"../include"  \
--MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -o "$@" "$<"
-
-	@echo Finished building: $<
-
-# Detect changes in the dependent files and recompile the respective object files.
-ifneq ($(MAKECMDGOALS),clean)
-ifneq ($(strip $(DEPS)),)
--include $(DEPS)
-endif
-endif
-
-$(SUB_DIRS):
-	$(MK_DIR) "$@"
+flash:
+	cp $(TARGET).hex $(CHIP_DIR) && sync $(CHIP_DIR)$(TARGET).hex 
 
 clean:
-	rm -f $(OBJS_AS_ARGS)
-	rm -f $(OUTPUT_FILE_PATH)
-	rm -f $(DEPS_AS_ARGS)
-	rm -f $(OUTPUT_FILE_NAME).a $(OUTPUT_FILE_NAME).hex $(OUTPUT_FILE_NAME).bin \
-        $(OUTPUT_FILE_NAME).lss $(OUTPUT_FILE_NAME).eep $(OUTPUT_FILE_NAME).map \
-        $(OUTPUT_FILE_NAME).srec
+	rm -f $(OBJ) $(TARGET).{elf,hex}
+
+install:
+	chmod +x install_toolchain.sh
+	./install_toolchain.sh
+
+# ####
+# Compiler rules
+%.hex: %.elf
+	$(AVR-OBJCOPY) -O ihex -R .eeprom -R .fuse -R .lock -R .signature $< $@
+
+%.elf: $(OBJ)
+	$(AVR-GCC) $^ $(LDFLAGS) -o $@
+
+%.o : %.c
+	$(AVR-GCC) $(CFLAGS) -o $@ -c $<

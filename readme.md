@@ -7,6 +7,7 @@ To easily download tailored makefiles and accompanying resources, Atmel START is
 Both AVR-GCC and IAR is supported
 
 ## Prerequisites
+This environment is made for MacOS. 
 
 * VS Code
   * C/C++ Extension (ms-vscode.cpptools)

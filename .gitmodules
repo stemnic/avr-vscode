@@ -1,0 +1,3 @@
+[submodule "gcc/debugger"]
+	path = gcc/debugger
+	url = https://github.com/stemnic/pyAVRdbg.git

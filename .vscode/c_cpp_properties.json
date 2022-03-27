@@ -4,8 +4,8 @@
             "name": "ATmega4809-AVRGCC",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Program Files (x86)/Atmel/Studio/7.0/packs/atmel/ATmega_DFP/1.3.300/include/",
-                "C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avr8-gnu-toolchain/**"
+                "~/Library/avr-atpack/include/",
+                "~/Library/avr-toolchain/**"
                 
             ],
             "defines": [
