@@ -1,3 +1,4 @@
 gcc/*.hex
 gcc/*.elf
 gcc/*.out
+.DS_Store
